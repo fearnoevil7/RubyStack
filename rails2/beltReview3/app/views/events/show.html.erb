@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <% if flash[:notice] %>
+        <% flash[:notice].each do |note| %>
+            <p id="notice"><%= note %></p>
+        <% end %>
+        <% end %>
+        <a href="/events">Events Dashboard</a>
+        <a href="/sessions" data-method="delete">Sign Out</a>
+        <h1><%= @event.name %></h1>
+        <h2><%= @event.user.first_name %> <%= @event.user.last_name %></h2>
+        <h3>Date: <%= @event.date %></h3>
+        <h4>Location: <%= @event.location %>, <%= @event.state %></h4>
+        <h5>People who are expected to attend <%= @event.name %>: <%= @number_of_people_who_joined.length %></h5>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name: </th>
+                    <th>Location: </th>
+                    <th>State: </th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @attendees.each do |attendee| %>
+                <tr>
+                    <td><%= attendee.first_name %> <%= attendee.last_name %></td>
+                    <td><%= attendee.location %></td>
+                    <td><%= attendee.state %></td>
+                </tr>
+                <%end%>
+            </tbody>
+        </table>
+        <h3>Discussion about this event:</h3>
+        <% @comments.each do |comment| %>
+        <p><%= comment.user.first_name %><%= comment.user.last_name %> says: <%= comment.content %></p>
+        <% end %>
+        <form action="/comments/<%= @event.id %>" method="POST">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <textarea cols="16" rows="3" name="comment[content]"></textarea>
+            <input type="submit" value="Submit Comments">
+        </form>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>

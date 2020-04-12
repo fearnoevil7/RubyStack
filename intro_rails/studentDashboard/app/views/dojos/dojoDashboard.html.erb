@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Title</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        </head>
+    <body>
+        <h1><%= @dojo.branch %></h1>
+        <h6><%= @dojo.street %></h6>
+        <h5><%= @dojo.city %></h5>
+        <h3>Student Roster</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @students.each do |student| %>
+                <tr>
+                    <td><%= student.first_name %></td>
+                    <td><%= student.last_name %></td>
+                    <td><%= student.email %></td>
+                    <td><u><a href="/<%= @dojo.id %>/<%= student.id %>/students/new">Show</a></u><u><a href="/edit/<%= @dojo.id %>/<%= student.id %>">Edit</a></u>
+                        <u><a href="/destroy/<%= @dojo.id %>/<%= student.id %>" data-method="delete">Destroy</a></u></td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+        <u><a href="/">Home</a></u>
+        <u><a href="/add/<%= @dojo.id %>">Add Student</a></u>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>

@@ -1,0 +1,12 @@
+<h1>All Blogs</h1>
+<% @blogs.each do |blog| %>
+    <%= blog.name %>
+    <%= blog.description %>
+<% end %>
+<a href="/">Home</a>
+<form action="/blogs" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    Name: <input type="text" name="blog[name]">
+    Description: <textarea type="text" name="blog[description]"></textarea>
+    <input type='submit' value='Create'>
+</form>

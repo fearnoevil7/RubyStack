@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Title</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <% if flash[:notice] %>
+        <% flash[:notice].each do |note| %>
+            <p id="notice"><%= note %></p>
+        <% end %>
+        <% end %>
+        <a href="/sessions" data-method="delete"><u>Sign Out</u></a>
+        <a href="/asc/<%= @course.id %>"><u>Sign Up Date Ascending Order</u></a>
+        <a href="/desc/<%= @course.id %>"><u>Sign Up Date Descending Order</u></a>
+        <h1><%= @course.name %></h1>
+
+        <p>Instructor: <%= @course.instructor %></p>
+        <p>Sign Ups: <%= @course.joins.length %></p>
+
+        <% if @count == 4 %>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name: </th>
+                    <th>Sign Up Date: </th>
+                    <th>Action: </th>
+                </tr>
+            </thead>
+            <tbody>
+                <%@signups2.each do |attendee|%>
+                <tr>
+                    <td><%= attendee.name %></td>
+                    <td><%= attendee.created_at %></td>
+                    <% if @user.id == attendee.id %>
+                    <td><a href="/joins/<%= @course.id %>" data-method="delete"><u>Remove</u></td>
+                    <%end%>
+                </tr>
+                <%end%>
+            </tbody>
+        </table>
+        <%elsif @count == 5%>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name: </th>
+                    <th>Sign Up Date: </th>
+                    <th>Action: </th>
+                </tr>
+            </thead>
+            <tbody>
+                <%@signups3.each do |attendee|%>
+                <tr>
+                    <td><%= attendee.name %></td>
+                    <td><%= attendee.created_at %></td>
+                    <% if @user.id == attendee.id %>
+                    <td><a href="/joins/<%= @course.id %>" data-method="delete"><u>Remove</u></td>
+                    <%end%>
+                </tr>
+                <%end%>
+            </tbody>
+        </table>
+        <%end%>
+        <% if @course.user.id == @user.id %>
+        <form action="/courses/<%= @course.id %>" method="POST">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="hidden" name="_method" value="delete">
+            <input type="submit" value="Delete">
+        </form>
+        
+        <form action="/courses/<%= @course.id %>/edit" method="get">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="submit" value="Edit">
+        </form>
+        <%end%>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>

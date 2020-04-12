@@ -1,0 +1,2 @@
+class Say < ApplicationRecord
+end

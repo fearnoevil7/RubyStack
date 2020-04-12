@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Title</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <% if flash[:notice] %>
+        <% flash[:notice].each do |note| %>
+            <p id="notice"><%= note %></p>
+        <% end %>
+        <% end %>
+        <h1>Welcome, <%= @user.name %></h1>
+        <a href="/sessions" data-method="delete"><u>Sign Out</u></a>
+        <a href="/courses/new"><u>Add Course</u></a>
+        <a href="/asc"><u>Low Sign Up</u></a>
+        <a href="/desc"><u>High Sign Up</u></a>
+        <h3>Courses</h3>
+        <% if @count == 0 %>
+        <table>
+            <thead>
+                <tr>
+                    <th>Course: </th>
+                    <th>Instructor: </th>
+                    <th>Signups: </th>
+                    <th>Action:</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%= @courses2.each do |course| %>
+                <tr>
+                    <td><a href="/courses/<%= course.id %>"><u><%= course.name %></u>
+                    <td><%= course.instructor %></td>
+                    <td><%= course.joins.length %>/<%= course.capacity %></td>
+                    <td>
+                        <%unless course.capacity == course.joins.length%>
+                        <% unless course.users_that_joined.include? @user %>
+                        <a href="/joins/<%= course.id %>"><u>Add</u></a>
+                        <%else%>
+                        <p>added</p>
+                        <%end%>
+                        <%else%>
+                        <p>full</p>
+                        <%end%>
+                    </td>
+                </tr>
+                <%end%>
+            </tbody>
+        </table>
+        <% elsif @count == 1 %>
+        <table>
+            <thead>
+                <tr>
+                    <th>Course: </th>
+                    <th>Instructor: </th>
+                    <th>Signups: </th>
+                    <th>Action:</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%= @courses.each do |course| %>
+                <tr>
+                    <td><a href="/courses/<%= course.id %>"><u><%= course.name %></u>
+                    <td><%= course.instructor %></td>
+                    <td><%= course.joins.length %>/<%= course.capacity %></td>
+                    <td>
+                        <%unless course.capacity == course.joins.length%>
+                        <% unless course.users_that_joined.include? @user %>
+                        <a href="/joins/<%= course.id %>"><u>Add</u></a>
+                        <%else%>
+                        <p>added</p>
+                        <%end%>
+                        <%else%>
+                        <p>full</p>
+                        <%end%>
+                    </td>
+                </tr>
+                <%end%>
+            </tbody>
+        </table>
+        <%end%>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>
